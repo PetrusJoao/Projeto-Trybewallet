@@ -1,6 +1,6 @@
 // Coloque aqui suas actions
-const actionGenerica = (state) => ({ type: 'ACTION-GENERICA', state });
+const newEmail = (state) => ({ type: 'USER_EMAIL', state });
 
 export const sengundaActionGenerica = (state) => ({ type: 'SEGUNDA-GENERICA', state });
 
-export default actionGenerica;
+export default newEmail;
