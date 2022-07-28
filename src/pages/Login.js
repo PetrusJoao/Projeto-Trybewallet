@@ -110,4 +110,8 @@ const mapDispatchToProps = (dispatch) => ({
   saveEmail: (email) => { dispatch(newEmail(email)); },
 });
 
+Login.propTypes = {
+  saveEmail: PropTypes.func,
+}.isRequired;
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
