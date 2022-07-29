@@ -57,6 +57,7 @@ class Login extends React.Component {
     const { email, senha, disabled, redirect } = this.state;
     return (
       <div>
+        <header>Hello, TrybeWallet!</header>
         {redirect ? <Redirect to="/carteira" /> : ''}
         <h1>Login</h1>
         <div className="input-container">

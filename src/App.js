@@ -6,16 +6,12 @@ import Wallet from './pages/Wallet';
 function App() {
   return (
     <Switch>
-      <div>
-        <header>Hello, TrybeWallet!</header>
-        <Route exact path="/">
-          <Login />
-        </Route>
-        <Route path="/carteira">
-          <Wallet />
-        </Route>
-
-      </div>
+      <Route exact path="/">
+        <Login />
+      </Route>
+      <Route path="/carteira">
+        <Wallet />
+      </Route>
     </Switch>
   );
 }
