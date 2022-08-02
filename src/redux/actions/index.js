@@ -1,6 +1,11 @@
 // Coloque aqui suas actions
 const newEmail = (state) => ({ type: 'USER_EMAIL', state });
 
+export const newExpense = (state) => ({
+  type: 'NEW_EXPENSE',
+  state,
+});
+
 export const receiveCurrency = (currencies) => ({
   type: 'RECEIVE_CURRENCIES',
   currencies });
