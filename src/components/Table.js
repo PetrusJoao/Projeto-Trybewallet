@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteExpense } from '../redux/actions';
 
 class Table extends Component {
   arredonda = (valor, cotacao) => (
@@ -8,7 +9,7 @@ class Table extends Component {
   )
 
   render() {
-    const { expenses } = this.props;
+    const { expenses, deleteItem } = this.props;
     return (
       <div>
         <table>
@@ -27,29 +28,37 @@ class Table extends Component {
           </thead>
           <tbody>
             {
-              expenses.map((expense) => (
-                <tr key={ expense.id }>
-                  <td>{expense.description}</td>
-                  <td>{expense.tag}</td>
-                  <td>{expense.method}</td>
-                  <td>{parseFloat(expense.value).toFixed(2)}</td>
+              expenses.map(({
+                id, description, tag, method, value, currency, exchangeRates,
+              }) => (
+                <tr key={ id }>
+                  <td>{description}</td>
+                  <td>{tag}</td>
+                  <td>{method}</td>
+                  <td>{parseFloat(value).toFixed(2)}</td>
                   {/* Trecho formatado após ajuda da amiga Larissa-Menezes */}
-                  <td>{expense.exchangeRates[expense.currency].name}</td>
+                  <td>{exchangeRates[currency].name}</td>
                   <td>
                     {
-                      parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)
+                      parseFloat(exchangeRates[currency].ask).toFixed(2)
                     }
                   </td>
                   <td>
                     {
-                      this.arredonda(expense.value,
-                        expense.exchangeRates[expense.currency].ask)
+                      this.arredonda(value,
+                        exchangeRates[currency].ask)
                     }
                   </td>
                   <td>Real</td>
                   <td>
                     <button type="button">Editar</button>
-                    <button type="button">Excluir</button>
+                    <button
+                      type="button"
+                      data-testid="delete-btn"
+                      onClick={ () => deleteItem(id) }
+                    >
+                      Excluir
+                    </button>
                   </td>
                 </tr>))
             }
@@ -64,10 +73,9 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   currency: () => { dispatch(fetchCurrency()); },
-//   expense: (despesa) => dispatch(newExpense(despesa)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  deleteItem: (id) => dispatch(deleteExpense(id)),
+});
 
 Table.propTypes = {
   // fetchCurrency: PropTypes.func,
@@ -75,4 +83,4 @@ Table.propTypes = {
   currencies: PropTypes.func,
 }.isRequired;
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

@@ -18,4 +18,9 @@ export function fetchCurrency() {
     ))));
 }
 
+export const deleteExpense = (id) => ({
+  type: 'DELETE_EXPENSE',
+  id,
+});
+
 export default newEmail;
