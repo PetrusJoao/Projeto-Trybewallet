@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteExpense } from '../redux/actions';
+import { deleteExpense, editExpense } from '../redux/actions';
 
 class Table extends Component {
   arredonda = (valor, cotacao) => (
@@ -9,7 +9,7 @@ class Table extends Component {
   )
 
   render() {
-    const { expenses, deleteItem } = this.props;
+    const { expenses, deleteItem, editItem } = this.props;
     return (
       <div>
         <table>
@@ -51,7 +51,13 @@ class Table extends Component {
                   </td>
                   <td>Real</td>
                   <td>
-                    <button type="button">Editar</button>
+                    <button
+                      type="button"
+                      data-testid="edit-btn"
+                      onClick={ () => editItem(id) }
+                    >
+                      Editar
+                    </button>
                     <button
                       type="button"
                       data-testid="delete-btn"
@@ -71,10 +77,13 @@ class Table extends Component {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  edit: state.wallet.editor,
+  idToEdit: state.wallet.idToEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   deleteItem: (id) => dispatch(deleteExpense(id)),
+  editItem: (id) => dispatch(editExpense(id)),
 });
 
 Table.propTypes = {

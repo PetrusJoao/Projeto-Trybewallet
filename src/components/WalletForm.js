@@ -33,8 +33,17 @@ askConsult = async () => {
 }
 
   handleAdd = () => {
-    // const { value, currency, method, tag, description } = this.state;
     this.askConsult();
+  };
+
+  handleEdit = async () => {
+    const { idToEdit, expense } = this.props;
+    const ask = await this.fetchAsk();
+    this.setState({
+      exchangeRates: ask,
+      id: idToEdit,
+    }, () => expense(this.state));
+    this.resetForm();
   };
 
   resetForm = () => {
@@ -59,7 +68,7 @@ askConsult = async () => {
 
   render() {
     const { value, currency, method, tag, description } = this.state;
-    const { currencies } = this.props;
+    const { currencies, edit } = this.props;
     return (
       <div>
         {currencies ? (
@@ -142,12 +151,21 @@ askConsult = async () => {
                 </select>
               </label>
               <div>
-                <button
-                  type="button"
-                  onClick={ this.handleAdd }
-                >
-                  Adicionar despesa
-                </button>
+                {edit ? (
+                  <button
+                    type="button"
+                    onClick={ this.handleEdit }
+                  >
+                    Editar despesa
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={ this.handleAdd }
+                  >
+                    Adicionar despesa
+                  </button>
+                )}
               </div>
             </form>
           </div>
@@ -160,8 +178,8 @@ askConsult = async () => {
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
-  // editor: state.wallet.currencies,
-  // idToEdit: state.wallet.currencies,
+  edit: state.wallet.editor,
+  idToEdit: state.wallet.idToEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -23,4 +23,14 @@ export const deleteExpense = (id) => ({
   id,
 });
 
+export const editExpense = (id) => ({
+  type: 'EDIT_EXPENSE',
+  id,
+});
+
+export const updateExpense = (state) => ({
+  type: 'UPDATE _EXPENSE',
+  state,
+});
+
 export default newEmail;
