@@ -184,7 +184,3 @@ describe('Desenvolva testes para atingir 60% de cobertura total da aplicação',
 
 	});
 });
-
-// test('', () =>{
-
-// });
